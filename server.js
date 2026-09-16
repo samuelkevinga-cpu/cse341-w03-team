@@ -1,6 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongodb = require('./db/connect');
+const mongoose = require('mongoose');
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -12,12 +13,15 @@ app
     next();
   })
   .use('/', require('./routes'));
-
-mongodb.initDb((err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    app.listen(port);
-    console.log(`Connected to DB and listening on ${port}`);
-  }
-});
+//connect to mongodb using mongoose and start the server
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is running on port: ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to connect to MongoDB', err);
+    process.exit(1);
+  });

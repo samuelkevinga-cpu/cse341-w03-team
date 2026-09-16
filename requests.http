@@ -1,0 +1,16 @@
+@baseUrl = http://localhost:8080
+@contactId = 6aa95cc0e61d41dcdec9a558
+
+
+POST {{baseUrl}}/contacts
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Michael",
+  "lastName": "jackson",
+  "email": "michael.jackson@example.com",
+  "favoriteColor": "",
+    "birthday": "1958-08-29"
+}
+
